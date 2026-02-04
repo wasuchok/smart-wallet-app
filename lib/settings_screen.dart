@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'constants/app_colors.dart';
+import 'history_screen.dart';
 import 'providers/theme_provider.dart';
 import 'widgets/custom_header_background.dart';
 import 'widgets/section_title.dart';
@@ -45,6 +46,21 @@ class SettingsScreen extends StatelessWidget {
                       const SizedBox(height: 10),
                       SettingsGroup(
                         children: [
+                          SettingsTile(
+                            icon: FontAwesomeIcons.clockRotateLeft,
+                            title: 'ประวัติธุรกรรม',
+                            subtitle: 'ดูรายการย้อนหลังทั้งหมด',
+                            color: Colors.teal,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const HistoryScreen(),
+                                ),
+                              );
+                            },
+                          ),
+                          const SettingsDivider(),
                           SettingsTile(
                             icon: FontAwesomeIcons.moon,
                             title: 'โหมดมืด',
@@ -183,11 +199,8 @@ class SettingsScreen extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: AppColors.primary, width: 2),
-              image: const DecorationImage(
-                image: NetworkImage('https://i.pravatar.cc/150?img=12'),
-                fit: BoxFit.cover,
-              ),
             ),
+            child: const Icon(FontAwesomeIcons.userLarge, size: 30, color: AppColors.primary),
           ),
           const SizedBox(width: 16),
           Expanded(

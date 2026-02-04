@@ -1,10 +1,10 @@
+import 'package:exprense_app/employee_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'add_transaction_screen.dart';
 import 'constants/app_colors.dart';
 import 'dashboard_tab.dart';
-import 'history_screen.dart';
 import 'settings_screen.dart';
 import 'stats_screen.dart';
 
@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _pages = [
     const DashboardTab(),
-    const HistoryScreen(),
+    const EmployeeListScreen(),
     const StatsScreen(),
     const SettingsScreen(),
   ];
@@ -33,10 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: AnimatedSwitcher(
         duration: const Duration(milliseconds: 300),
         transitionBuilder: (Widget child, Animation<double> animation) {
-          return FadeTransition(
-            opacity: animation,
-            child: child,
-          );
+          return FadeTransition(opacity: animation, child: child);
         },
         child: _pages[_selectedIndex],
       ),
@@ -63,23 +60,24 @@ class _HomeScreenState extends State<HomeScreen> {
       shape: const CircularNotchedRectangle(),
       notchMargin: 8.0,
       color: Theme.of(context).cardColor,
+      padding: EdgeInsets.zero,
       child: SizedBox(
-        height: 60,
+        height: 100,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildNavItem(0, FontAwesomeIcons.house, 'หน้าหลัก'),
-            _buildNavItem(1, FontAwesomeIcons.clockRotateLeft, 'ประวัติ'),
+            _buildNavItem(0, 'assets/menu_home.png'),
+            _buildNavItem(1, 'assets/menu_emp.png'),
             const SizedBox(width: 48), // Space for FAB
-            _buildNavItem(2, FontAwesomeIcons.chartSimple, 'สถิติ'),
-            _buildNavItem(3, FontAwesomeIcons.gear, 'ตั้งค่า'),
+            _buildNavItem(2, 'assets/menu_stat.png'),
+            _buildNavItem(3, 'assets/menu_setting.png'),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildNavItem(int index, IconData icon, String label) {
+  Widget _buildNavItem(int index, String assetPath) {
     final isSelected = _selectedIndex == index;
     return InkWell(
       onTap: () {
@@ -87,27 +85,42 @@ class _HomeScreenState extends State<HomeScreen> {
           _selectedIndex = index;
         });
       },
-      borderRadius: BorderRadius.circular(8),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              color: isSelected ? AppColors.primary : Colors.grey[400],
-              size: 20,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 12,
-                color: isSelected ? AppColors.primary : Colors.grey[400],
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+            AnimatedScale(
+              scale: isSelected ? 1.15 : 1.0,
+              duration: const Duration(milliseconds: 200),
+              child: Opacity(
+                opacity: isSelected ? 1.0 : 0.4,
+                child: Image.asset(
+                  assetPath,
+                  width: 48,
+                  height: 48,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(
+                      Icons.broken_image,
+                      size: 48,
+                      color: Colors.grey,
+                    );
+                  },
+                ),
               ),
             ),
+            if (isSelected)
+              Container(
+                margin: const EdgeInsets.only(top: 6),
+                width: 6,
+                height: 6,
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  shape: BoxShape.circle,
+                ),
+              ),
           ],
         ),
       ),

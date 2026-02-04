@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'constants/app_colors.dart';
+import 'history_screen.dart';
 import 'widgets/count_up_text.dart';
 import 'widgets/custom_header_background.dart';
 import 'widgets/section_title.dart';
@@ -126,9 +127,10 @@ class _DashboardTabState extends State<DashboardTab> {
         backgroundColor: AppColors.primary,
         title: Row(
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 16,
-              backgroundImage: NetworkImage('https://i.pravatar.cc/150?img=12'),
+              backgroundColor: Colors.white,
+              child: Icon(FontAwesomeIcons.user, size: 16, color: AppColors.primary),
             ),
             const SizedBox(width: 10),
             Column(
@@ -182,7 +184,29 @@ class _DashboardTabState extends State<DashboardTab> {
                   const SizedBox(height: 8),
                   _buildExpenseChart(),
                   const SizedBox(height: 16),
-                  const SectionTitle(title: 'รายการล่าสุด'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SectionTitle(title: 'รายการล่าสุด'),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const HistoryScreen(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'ดูทั้งหมด',
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 8),
                   _buildRecentTransactions(),
                   const SizedBox(height: 16),
