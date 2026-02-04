@@ -167,7 +167,6 @@ class TransactionSlipScreen extends StatelessWidget {
 
                         const SizedBox(height: 32),
 
-                        // Ref ID Footer
                         Text(
                           'Ref: ${DateFormat('yyyyMMddHHmmss').format(date)}',
                           style: TextStyle(
@@ -183,7 +182,6 @@ class TransactionSlipScreen extends StatelessWidget {
               ),
             ),
 
-            // Bottom Space filler
             const SizedBox(height: 40),
           ],
         ),

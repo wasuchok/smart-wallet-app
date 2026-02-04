@@ -5,7 +5,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 
 import 'constants/app_colors.dart';
-import 'home_screen.dart';
+import 'login_screen.dart';
 import 'providers/theme_provider.dart';
 
 void main() async {
@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
               },
             ),
           ),
-          home: const HomeScreen(),
+          home: const LoginScreen(),
           localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
